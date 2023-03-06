@@ -16,35 +16,37 @@ const Gallery = ({ setIndex, index }) => {
           columns={matchesIPhone ? 1 : matchesIPad ? 2 : 3}
           spacing={matchesIPhone ? 1.5 : matchesIPad ? 2 : 3}
         >
-          {images.map((item, i) => (
-            <div key={i}>
-              <Box
-                sx={{ cursor: "pointer" }}
-                onClick={() => {
-                  setIndex(i);
-                  window.history.replaceState(
-                    null,
-                    "New Page Title",
-                    `/image-details/${i}`
-                  );
-                }}
-              >
-                {/* <Label>{index + 1}</Label> */}
-                <img
-                  src={`${item.url}?w=162&auto=format`}
-                  srcSet={`${item.url}?w=162&auto=format&dpr=2 2x`}
-                  alt={item.title}
-                  loading="lazy"
-                  style={{
-                    borderBottomLeftRadius: 4,
-                    borderBottomRightRadius: 4,
-                    display: "block",
-                    width: "100%",
+          {images
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .map((item, i) => (
+              <div key={i}>
+                <Box
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setIndex(i);
+                    window.history.replaceState(
+                      null,
+                      "New Page Title",
+                      `/image-details/${i}`
+                    );
                   }}
-                />
-              </Box>
-            </div>
-          ))}
+                >
+                  {/* <Label>{index + 1}</Label> */}
+                  <img
+                    src={`${item.url}?w=162&auto=format`}
+                    srcSet={`${item.url}?w=162&auto=format&dpr=2 2x`}
+                    alt={item.title}
+                    loading="lazy"
+                    style={{
+                      borderBottomLeftRadius: 4,
+                      borderBottomRightRadius: 4,
+                      display: "block",
+                      width: "100%",
+                    }}
+                  />
+                </Box>
+              </div>
+            ))}
         </Masonry>
       </Box>
     </Page>
